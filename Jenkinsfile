@@ -3,6 +3,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Build') {
             agent {
                 docker {
@@ -33,8 +34,7 @@ pipeline {
                 '''
             }
         }
-    }
-    stages {
+
         stage('Test') {
             agent {
                 docker {
@@ -45,11 +45,15 @@ pipeline {
 
             steps {
                 sh '''
-                 test -f build/index.html
-                 npm test
-                '''    
+                    echo "===== Check Build File ====="
+                    test -f build/index.html
+
+                    echo "===== Run Tests ====="
+                    npm test
+
+                    echo "===== Tests Completed ====="
+                '''
             }
         }
     }
-
 }
